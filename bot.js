@@ -30,7 +30,7 @@ const getTheGoods = () => {
     return;
   }
 
-  page.clearCookies();
+  phantom.clearCookies();
 
   const url = generateUrl();
   console.log("Going to: " + url);
@@ -69,11 +69,17 @@ const getTheGoods = () => {
           });
 
           setTimeout(() => {
+            // Can't get page.evaluate to work with iframe fuckery
+            // const filename = page.evaluate(() => {
+            //   console.log(document.documentElement.outerHTML);
+            //   return document.querySelector(".barcode-text").textContent;
+            // });
+
             page.render(count + ".png");
             console.log("Saved coupon.");
 
             getTheGoods();
-          }, 5000); // wait out fade animation
+          }, 10000); // wait out fade animation
         }, 13000); // wait out slots animation
       } else {
         getTheGoods();
